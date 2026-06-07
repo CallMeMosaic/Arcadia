@@ -97,5 +97,10 @@ class MainMenu(stage: Stage, val nextSceneFactory: () -> Scene) : Menu(stage) {
 
     }
 
+    override fun switchScene(Scene: Scene) {
+        super.switchScene(Scene)
+        
+    }
+
 
 }

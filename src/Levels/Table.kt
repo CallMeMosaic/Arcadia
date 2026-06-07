@@ -16,6 +16,7 @@ class Table(stage: Stage, val gameEngine: TarotGameEngine): Scene(stage) {
     var WhosTurn = "DEALER"
     var round = 1
 
+
     //var dealerTime = gameEngine.inverseTime(gameEngine.selectedTime)
 
     init {
@@ -118,7 +119,7 @@ class Table(stage: Stage, val gameEngine: TarotGameEngine): Scene(stage) {
 
             // Check for the Fool
             if (checkMatchStatus(gameStatus,dealersTurn)){
-                System.exit(0)
+
                 }
             }
 
@@ -144,10 +145,10 @@ class Table(stage: Stage, val gameEngine: TarotGameEngine): Scene(stage) {
                 println("Game Over!")
                 if (gameEngine.playerScore > gameEngine.dealerScore) {
                     println("You won!")
-                    System.exit(0)
+                    //System.exit(0)
                 } else {
                     println("You lost!")
-                    System.exit(0)
+                    //System.exit(0)
                 }
             }
             }
@@ -184,5 +185,9 @@ class Table(stage: Stage, val gameEngine: TarotGameEngine): Scene(stage) {
             }
         }
         return false
+    }
+    override fun runScene(): Any? {
+        super.runScene()
+        return true
     }
 }

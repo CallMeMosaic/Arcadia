@@ -14,10 +14,11 @@ open class Scene (stage : Stage) {
     val stage = stage
     var actorEnsemble = mutableListOf<Actor>()
 
-    open fun runScene() {
+    open fun runScene():Any? {
         for (actor in actorEnsemble) {
             actor.visible = true
         }
+        return null
     }
 
     open fun addActor(actor : Actor) {
