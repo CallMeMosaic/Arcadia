@@ -1,6 +1,7 @@
 package Levels
 
 import Gameplay.TarotGameEngine
+import Interfaces.LevelFramework.LevelSwitch
 import Interfaces.LevelFramework.Scene
 import de.th_koeln.basicstage.ButtonActor
 import de.th_koeln.basicstage.Stage
@@ -9,7 +10,7 @@ import de.th_koeln.imageprovider.Assets
 import java.util.Random
 import kotlin.math.cos
 
-class Table(stage: Stage, val gameEngine: TarotGameEngine): Scene(stage) {
+class Table(stage: Stage, val gameEngine: TarotGameEngine, val returnToMenuFactory: () -> Scene): Scene(stage) {
     var selectedCardsByPlayer = mutableListOf<ButtonActor>()
     var selectedCardsByDealer = mutableListOf<ButtonActor>()
     var allCards = mutableListOf<ButtonActor>()
@@ -145,11 +146,16 @@ class Table(stage: Stage, val gameEngine: TarotGameEngine): Scene(stage) {
                 println("Game Over!")
                 if (gameEngine.playerScore > gameEngine.dealerScore) {
                     println("You won!")
+                    gameEngine.playerWin ++
                     //System.exit(0)
                 } else {
                     println("You lost!")
+                    gameEngine.dealerWin ++
                     //System.exit(0)
                 }
+                gameEngine.reset()
+                val menu = returnToMenuFactory()
+                LevelSwitch(this as Scene, menu).switchLevel()
             }
             }
         else {
@@ -165,23 +171,36 @@ class Table(stage: Stage, val gameEngine: TarotGameEngine): Scene(stage) {
             if (status == "INSTANT_WIN") {
                 println("Fool reversed has been drawn!")
                 println("Dealer wins!")
-                return true
+                gameEngine.dealerWin ++
+                gameEngine.reset()
+                val menu = returnToMenuFactory()
+                LevelSwitch(this as Scene, menu).switchLevel()
+
             }
             if (status == "INSTANT_LOOSE") {
                 println("Fool upright has been drawn!")
                 println("Player wins!")
-                return true
+                gameEngine.playerWin ++
+                gameEngine.reset()
+                val menu = returnToMenuFactory()
+                LevelSwitch(this as Scene, menu).switchLevel()
             }
         }else if (!dealersTurn) {
             if (status == "INSTANT_WIN") {
                 println("Fool reversed has been drawn!")
                 println("Player wins!")
-                return true
+                gameEngine.playerWin ++
+                gameEngine.reset()
+                val menu = returnToMenuFactory()
+                LevelSwitch(this as Scene, menu).switchLevel()
             }
             if (status == "INSTANT_LOOSE") {
                 println("Fool upright has been drawn!")
                 println("Dealer wins!")
-                return true
+                gameEngine.dealerWin ++
+                gameEngine.reset()
+                val menu = returnToMenuFactory()
+                LevelSwitch(this as Scene, menu).switchLevel()
             }
         }
         return false

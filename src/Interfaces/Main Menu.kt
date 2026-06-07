@@ -1,5 +1,6 @@
 package Interfaces
 
+import Gameplay.TarotGameEngine
 import Interfaces.LevelFramework.LevelSwitch
 import Interfaces.LevelFramework.Menu
 import Interfaces.LevelFramework.Scene
@@ -14,7 +15,7 @@ import de.th_koeln.imageprovider.ActorAppearance
 import de.th_koeln.imageprovider.Assets
 
 
-class MainMenu(stage: Stage, val nextSceneFactory: () -> Scene) : Menu(stage) {
+class MainMenu(stage: Stage, val nextSceneFactory: () -> Scene, val gameEngine: TarotGameEngine) : Menu(stage) {
     lateinit var levelSwitch: LevelSwitch
     lateinit var devSwitch: LevelSwitch
 
@@ -92,6 +93,21 @@ class MainMenu(stage: Stage, val nextSceneFactory: () -> Scene) : Menu(stage) {
         title.reactionForMouseClick = {
             LevelSwitch(this as Scene, DEVLEVEL(stage)).switchLevel()
             Selector(this).deactivate()
+        }
+
+        // Add a scores display for fun
+
+        val scoreDisplay = Actor("WinLoss", 20, 20)
+        scoreDisplay.text.textBackground = Assets.TextBackgrounds.STONE
+        scoreDisplay.width = WorldConstants.STAGE_WIDTH / 100 * 30
+        scoreDisplay.text.xOffset = 10
+        scoreDisplay.text.yOffset = -5
+        scoreDisplay.opacity = 80
+        addActor(scoreDisplay)
+
+        // Animate it so it updates every frame
+        scoreDisplay.animation.everyNsteps.reactionForTimePassed = {
+            scoreDisplay.text.content = "W: ${gameEngine.playerWin}  L: ${gameEngine.dealerWin}"
         }
 
 

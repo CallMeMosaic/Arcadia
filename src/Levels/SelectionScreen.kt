@@ -49,7 +49,7 @@ class SelectionScreen(stage: Stage,val nextSceneFactory: () -> Scene, val gameEn
 
         futureButton.text.content = "Future"
         futureButton.text.textBackground = Assets.TextBackgrounds.STONE
-        futureButton.width = WorldConstants.STAGE_WIDTH / 100 * 25
+        futureButton.width = WorldConstants.STAGE_WIDTH / 100 * 25 + 5
         futureButton.text.xOffset = (futureButton.width / 4).toInt() + 10
         futureButton.text.yOffset = (futureButton.height / 4).toInt() - 5
         futureButton.x = futureButton.x - futureButton.width / 2

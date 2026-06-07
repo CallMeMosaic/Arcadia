@@ -30,6 +30,9 @@ class TarotGameEngine {
     var dealerScore = 0
     var selectedTime: String = "PAST"
 
+    var playerWin = 0
+    var dealerWin = 0
+
     init {
         setupDeck()
         shuffleIntoCircle()
@@ -83,5 +86,11 @@ class TarotGameEngine {
 
     fun inverseTime(time: String): String {
         return if (time == "PAST") "FUTURE" else "PAST"
+    }
+
+    fun reset(){
+        playerScore = 0
+        dealerScore = 0
+        selectedTime = ""
     }
 }
